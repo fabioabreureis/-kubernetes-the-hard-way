@@ -1,3 +1,35 @@
+# Kubernetes The Hard Way (Libvirt KVM edition)
+
+This tutorial walks you through setting up Kubernetes the hard way. This guide
+is not for people looking for a fully automated command to bring up a
+Kubernetes cluster. If that's you then check out the
+[Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
+
+Kubernetes The Hard Way is optimized for learning, which means taking the long
+route to ensure you understand each task required to bootstrap a Kubernetes
+cluster.
+
+> The results of this tutorial should not be viewed as production ready, and
+may receive limited support from the community, but don't let that stop you
+from learning!
+
+## Copyright
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+## Differences with the original kubernetes-the-hard-way and others
+
+This tutorial is a fork from https://github.com/alosadagrande/kubernetes-the-hard-way-libvirt-kvm. 
+
+> **Note:** This tutorial has been forked from [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) wrote by Kelsey Hightower and it is based also on [Kubernetes The Hard Way (Openstack Edition)](https://github.com/e-minguez/kubernetes-the-hard-way-openstack) by Eduardo Mínguez. Special thanks to both.
+
+We are aim this deployment with KVM virtualization with cloud-init inside of instances for simulate instances from cloud. 
+
+I'm using this playbook bellow to deploy my instances inside of my KVM. 
+
+https://github.com/fabioabreureis/ansible-kvm-cloudinit-prosivion
+
+=======
 # kubernetes-the-hard-way
 
 ## Differences with the original kubernetes-the-hard-way and others
@@ -5,6 +37,7 @@
 > **Note:** This tutorial has been forked from [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) wrote by Kelsey Hightower and it is based also on [Kubernetes The Hard Way (Openstack Edition)](https://github.com/e-minguez/kubernetes-the-hard-way-openstack) by Eduardo Mínguez. Special thanks to both.
 
 The main difference is that instead of running our cluster on top of an IaaS solution as Google Cloud or OpenStack, we aim to deploy a Kubernetes cluster on a baremetal server. We will leverage the virtualization capabilities that comes with GNU/Linux (libvirt/KVM/QEMU) to easily provide a similar *virtual infrastructure*. Note that in this case, we could use any spare baremetal server or laptop (with enough resources) running a GNU/Linux distribution.
+>>>>>>> 3732bec0ee03d72dbc366944e9fda09d946efdd7
 
 Some other differences in this installation against the original one:
 
