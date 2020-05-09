@@ -29,7 +29,7 @@ I'm using this playbook bellow to deploy my instances inside of my KVM.
 
 https://github.com/fabioabreureis/ansible-kvm-cloudinit-prosivion
 
-=======
+
 # kubernetes-the-hard-way
 
 ## Differences with the original kubernetes-the-hard-way and others
@@ -37,12 +37,13 @@ https://github.com/fabioabreureis/ansible-kvm-cloudinit-prosivion
 > **Note:** This tutorial has been forked from [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) wrote by Kelsey Hightower and it is based also on [Kubernetes The Hard Way (Openstack Edition)](https://github.com/e-minguez/kubernetes-the-hard-way-openstack) by Eduardo Mínguez. Special thanks to both.
 
 The main difference is that instead of running our cluster on top of an IaaS solution as Google Cloud or OpenStack, we aim to deploy a Kubernetes cluster on a baremetal server. We will leverage the virtualization capabilities that comes with GNU/Linux (libvirt/KVM/QEMU) to easily provide a similar *virtual infrastructure*. Note that in this case, we could use any spare baremetal server or laptop (with enough resources) running a GNU/Linux distribution.
->>>>>>> 3732bec0ee03d72dbc366944e9fda09d946efdd7
+
 
 Some other differences in this installation against the original one:
 
 * CentOS 7/8 instead Ubuntu as the operating system of the instances.
 * Dedicated instance for load balancing (with HAProxy).
+* DNS Server for kvm vms. 
 
 
 ## Target Audience
