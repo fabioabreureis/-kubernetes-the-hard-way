@@ -69,6 +69,13 @@ DELAY=0
 GATEWAY=192.168.15.1
 ```
 
+Enable the bridge0 interface 
+
+```
+ip link set dev bridge0 up 
+```
+
+
 Uncomment these options in  /etc/libvirt/libvirtd.conf  file: 
 
 ```
