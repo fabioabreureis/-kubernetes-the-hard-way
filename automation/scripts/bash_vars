@@ -1,0 +1,25 @@
+# cert directory
+CERTDIR=/opt/certs
+# hosts
+DOMAIN="local.lab"
+WORKER1=worker1
+WORKER2=worker2
+WORKER3=worker3
+MASTER1=master1
+MASTER2=master2
+MASTER3=master3
+LOADBALANCER=loadbalancer
+
+#Certificate settings
+C=BR
+L=SaoPaulo
+ST=BRAZIL
+
+#Kubernetes
+KUBE_CLUSTERNAME=kubernetes-the-hard-way
+KUBECTL_CONF_DIR=/opt/kubectlconf
+KUBERNETES_BAREMETAL_ADDRESS=192.168.15.111
+KUBERNETES_HOSTNAMES=kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local
+KUBINTCLUSTER_RANGE=10.32.0
+KUBERNETES_PUBLIC_ADDRESS=$(ssh $LOADBALANCER hostname --ip-address)
+

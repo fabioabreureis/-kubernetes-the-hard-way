@@ -1,0 +1,5 @@
+galaxy_info:
+  author: Fabio Abreu Reis
+  description: Installs etcd cluster.
+  license: GPLv3
+  min_ansible_version: 2.7

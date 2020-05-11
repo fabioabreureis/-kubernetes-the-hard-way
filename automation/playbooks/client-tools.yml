@@ -1,0 +1,14 @@
+- hosts: all
+  become: true
+  vars_files:
+    ./kubernetesvars.yml
+  tasks:
+    - name: Download cfssl and cfssljson 
+      get_url:
+        url: "{{ item }}"
+        dest: "/usr/local/bin/{{ item | basename }}"
+        mode: '0755'
+      loop:
+        - https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/linux/cfssl
+        - https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/linux/cfssljson
+        - "https://storage.googleapis.com/kubernetes-release/release/{{ kubeversion }}/bin/linux/amd64/kubectl"

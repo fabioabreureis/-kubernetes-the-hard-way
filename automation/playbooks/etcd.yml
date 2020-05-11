@@ -1,0 +1,6 @@
+- hosts: etcd
+  become: true
+  vars_files:
+    ./kubernetesvars.yml
+  roles:
+    - ansible-role-etcd 

@@ -1,0 +1,33 @@
+- hosts: loadbalancer,masters
+  gather_facts: yes
+  become: true
+  vars_files:
+    ./kubernetesvars.yml
+  tasks:
+    - name: Install Haproxy packages
+      yum:
+        name: haproxy 
+        state: present
+      when: "'loadbalancer' in group_names" 
+    - name: Haproxy conf template
+      template:
+        src: ./templates/haproxy.conf.j2
+        dest: /etc/haproxy/haproxy.cfg
+        mode: 0644
+      when: "'loadbalancer' in group_names" 
+    - name: Semanage allows http 6443 port
+      seport:
+        ports: "{{ item }}"
+        proto: tcp
+        setype: http_port_t
+        state: present
+      when: "'loadbalancer' in group_names"
+      loop:
+        - 6443
+        - 9000 
+    - name: Start Haproxy 
+      service:
+        name: haproxy
+        enabled: yes
+        state: restarted
+      when: "'loadbalancer' in group_names" 

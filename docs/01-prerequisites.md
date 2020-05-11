@@ -300,3 +300,29 @@ After the  playbook execution you can validate with this command:
  29    worker3                        running
 ```
 
+Dns validation 
+
+```
+[root@kvm ansible-kvm-cloudinit-prosivion]# dig  master1 @192.168.15.199
+
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-9.P2.el7 <<>> master1 @192.168.15.199
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 57792
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;master1.			IN	A
+
+;; AUTHORITY SECTION:
+.			10800	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2020050801 1800 900 604800 86400
+
+;; Query time: 13 msec
+;; SERVER: 192.168.15.199#53(192.168.15.199)
+;; WHEN: Sat May 09 11:58:17 -03 2020
+;; MSG SIZE  rcvd: 111
+```
+
+Next: [Installing the Client Tools](02-client-tools.md)
