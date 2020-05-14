@@ -1,0 +1,16 @@
+---
+
+- name: Copy rbc files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ kube_etc_dir }}/{{ item }}"
+  loop:
+    - rbac1.yml
+    - rbac2.yml
+
+- name: Running kubectl apply 
+  command: "cd {{ ca_conf_directory }} && /usr/local/bin/kubectl apply --kubeconfig admin.kubeconfig -f {{ kube_etc_dir }}/{{ item }}"
+  loop:
+    - rbac1.yml
+    - rbac2.yml
+

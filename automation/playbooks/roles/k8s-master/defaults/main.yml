@@ -1,0 +1,6 @@
+---
+kubeconf_dir: /opt/kubectlconf
+kube_version: "1.17.2"
+ca_conf_directory: /opt/certs
+kube_etc_dir: /etc/kubernetes
+kube_lib_dir: /var/lib/kubernetes

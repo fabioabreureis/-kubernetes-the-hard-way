@@ -1,0 +1,6 @@
+- hosts: workers
+  become: true
+  vars_files:
+    ./kubernetesvars.yml
+  roles:
+    - k8s-workers

@@ -1,0 +1,6 @@
+---
+cri_tools_version: 1.16.1
+opencontainers_version: "1.0.0-rc9"
+cni_plugins_linux_version: 0.8.2
+containerd_version: 1.3.0
+kube_version: 1.17.2

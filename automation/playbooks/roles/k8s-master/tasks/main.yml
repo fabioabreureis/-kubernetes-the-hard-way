@@ -1,0 +1,8 @@
+---
+
+- include_tasks: masters.yml
+  when: "'masters' in group_names"
+
+
+- include_tasks: rbac.yml
+  when: "'masters' in group_names"

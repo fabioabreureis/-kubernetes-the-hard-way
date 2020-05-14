@@ -1,0 +1,53 @@
+---
+- name: Install libselinux as prerequisite for SELinux Ansible module
+  yum:
+    name: "{{item}}"
+    state: latest
+  loop:
+    - libselinux-python
+    - libsemanage-python
+
+- name: Disable SELinux at next reboot
+  selinux:
+    state: disabled
+
+- name: Set SELinux in permissive mode until the machine is rebooted
+  command: setenforce 0
+  ignore_errors: true
+  changed_when: false
+
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Create kubernetes directories
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  loop:
+    - /etc/containerd
+    - /etc/cni
+    - /opt/cni
+    - /etc/cni/net.d
+    - /opt/cni/bin
+    - /var/lib/kubelet
+    - /var/lib/kubernetes
+    - /var/run/kubernetes
+    - /var/lib/kube-proxy
+    - /opt/kubefiles 
+
+- name: Download binaries
+  get_url:
+    url: "{{ item }}"
+    dest: "/opt/kubefiles/{{ item | basename }}"
+    mode: '0755'
+  loop:
+    - "https://github.com/kubernetes-sigs/cri-tools/releases/download/v{{ cri_tools_version }}/crictl-v{{ cri_tools_version }}-linux-amd64.tar.gz"
+    - "https://github.com/opencontainers/runc/releases/download/v{{ opencontainers_version }}/runc.amd64"
+    - "https://github.com/containernetworking/plugins/releases/download/v{{ cni_plugins_linux_version }}/cni-plugins-linux-amd64-v{{ cni_plugins_linux_version }}.tgz"
+    - "https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}.linux-amd64.tar.gz"
+    - "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubectl"
+    - "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kube-proxy"
+    - "https://storage.googleapis.com/kubernetes-release/release/v{{ kube_version }}/bin/linux/amd64/kubelet"

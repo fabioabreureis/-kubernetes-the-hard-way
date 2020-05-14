@@ -1,0 +1,39 @@
+Description=Kubernetes API Server
+Documentation=https://github.com/kubernetes/kubernetes
+
+[Service]
+ExecStart=/usr/local/bin/kube-apiserver \
+  --advertise-address={{ hostvars[inventory_hostname].ansible_default_ipv4.address }} \
+  --allow-privileged=true \
+  --apiserver-count=3 \
+  --audit-log-maxage=30 \
+  --audit-log-maxbackup=3 \
+  --audit-log-maxsize=100 \
+  --audit-log-path=/var/log/audit.log \
+  --authorization-mode=Node,RBAC \
+  --bind-address=0.0.0.0 \
+  --client-ca-file={{ kube_lib_dir }}/ca.pem \
+  --enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
+  --etcd-cafile={{ kube_lib_dir }}/ca.pem \
+  --etcd-certfile={{ kube_lib_dir }}/kubernetes.pem \
+  --etcd-keyfile={{ kube_lib_dir }}/kubernetes-key.pem \
+  --etcd-servers={% for host in groups.etcd %}https://{{ hostvars[host].ansible_default_ipv4.address }}:2379{% if not loop.last %},{% endif %}
+{% endfor %}  \
+  --event-ttl=1h \
+  --encryption-provider-config={{ kube_etc_dir }}/config/encryption-config.yaml \
+  --kubelet-certificate-authority={{ kube_lib_dir }}/ca.pem \
+  --kubelet-client-certificate={{ kube_lib_dir }}/kubernetes.pem \
+  --kubelet-client-key={{ kube_lib_dir }}/kubernetes-key.pem \
+  --kubelet-https=true \
+  --runtime-config=api/all=true \
+  --service-account-key-file={{ kube_lib_dir }}/service-account.pem \
+  --service-cluster-ip-range={{ kube_svc_clusterip_range }} \
+  --service-node-port-range=30000-32767 \
+  --tls-cert-file={{ kube_lib_dir }}/kubernetes.pem \
+  --tls-private-key-file={{ kube_lib_dir }}//kubernetes-key.pem \
+  --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
