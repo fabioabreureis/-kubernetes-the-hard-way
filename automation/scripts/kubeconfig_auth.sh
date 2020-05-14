@@ -50,7 +50,7 @@ if [ ! -f $KUBECTL_CONF_DIR/kube-proxy.kubeconfig ]; then
     --kubeconfig=kube-proxy.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=$KUBE_CLUSTERNAME \
     --user=system:kube-proxy \
     --kubeconfig=kube-proxy.kubeconfig
 
@@ -75,13 +75,35 @@ if [ ! -f $KUBECTL_CONF_DIR/kube-scheduler.kubeconfig ]; then
     --kubeconfig=kube-scheduler.kubeconfig
 
   kubectl config set-context default \
-    --cluster=kubernetes-the-hard-way \
+    --cluster=$KUBE_CLUSTERNAME \
     --user=system:kube-scheduler \
     --kubeconfig=kube-scheduler.kubeconfig
 
  kubectl config use-context default --kubeconfig=kube-scheduler.kubeconfig
 fi
 
+
+## SET CONTROLLER
+if [ ! -f $KUBECTL_CONF_DIR/kube-controller-manager.kubeconfig ]; then
+  kubectl config set-cluster $KUBE_CLUSTERNAME \
+    --certificate-authority=$CERTDIR/ca.pem \
+    --embed-certs=true \
+    --server=https://127.0.0.1:6443 \
+    --kubeconfig=kube-controller-manager.kubeconfig
+
+  kubectl config set-credentials system:kube-controller-manager \
+    --client-certificate=$CERTDIR/kube-controller-manager.pem \
+    --client-key=$CERTDIR/kube-controller-manager-key.pem \
+    --embed-certs=true \
+    --kubeconfig=kube-controller-manager.kubeconfig
+
+  kubectl config set-context default \
+    --cluster=$KUBE_CLUSTERNAME \
+    --user=system:kube-controller-manager \
+    --kubeconfig=kube-controller-manager.kubeconfig
+
+  kubectl config use-context default --kubeconfig=kube-controller-manager.kubeconfig
+fi 
 
 ## SET ADMIN USER
 
